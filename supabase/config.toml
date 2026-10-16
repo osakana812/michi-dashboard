@@ -1,0 +1,3 @@
+[functions.invite-viewer]
+# The function verifies the visitor JWT with auth.getUser() before any write.
+verify_jwt = false
