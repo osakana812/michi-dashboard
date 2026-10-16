@@ -34,6 +34,29 @@ on conflict (id) do nothing;
 
 SMTP が未設定でもサンプルを試せますが、外部宛ての招待メールの動作は完了していません。メール送信に失敗した場合は、アプリにその旨を表示します。権限の登録後に送信だけ失敗した場合は、送信設定を直して同じアドレスを再招待できます。
 
+### 無料で始める場合: Brevo
+
+2026年10月16日時点では、Brevo Free にトランザクションメールと1日300通の無料枠があり、クレジットカードは不要です。[公式のプラン説明](https://help.brevo.com/hc/en-us/articles/208589409-About-Brevo-s-pricing-plans)
+
+1. [Brevo の無料登録](https://onboarding.brevo.com/account/register)で、本人がアカウント作成、利用規約の確認、メール確認を行います。有料プランや追加機能を購入する必要はありません。
+2. Brevo の送信者設定で、自分が確認できるメールアドレスを登録・確認します。独自ドメインがある場合は認証します。Gmail 等のアドレスはドメイン認証できないため、Brevo が送信元のドメインを `brevosend.com` へ置き換える場合があります。[送信元の置き換えの説明](https://help.brevo.com/hc/en-us/articles/16045394674066-Troubleshooting-Domain-authentication)
+3. Transactional のメール送信を有効にします。新しいアカウントではサポートへの有効化依頼が必要な場合があります。利用目的は「招待した人だけが閲覧する進捗ダッシュボードのログイン・招待メール」です。[SMTP 有効化の説明](https://help.brevo.com/hc/en-us/articles/115000188150-Troubleshooting-Issues-with-Brevo-SMTP)
+4. Settings → SMTP & API → SMTP で Login を確認し、SMTP key を本人が作成します。API key、アカウントのパスワードとは別です。
+5. Supabase → Authentication → Emails → SMTP Settings に次を入力します。SMTP key は本人が設定画面の Password 欄に直接入力します。
+
+| Supabase の項目 | 値 |
+| --- | --- |
+| Sender email | Brevo で確認した送信者のアドレス |
+| Sender name | michi |
+| Host | smtp-relay.brevo.com |
+| Port | 587 |
+| Username | Brevo の SMTP 画面に表示される Login |
+| Password | Brevo の SMTP key（チャットや GitHub には貼らない） |
+
+[Brevo SMTP の公式設定手順](https://help.brevo.com/hc/en-us/articles/7924908994450-Send-transactional-emails-using-Brevo-SMTP)
+
+保存後、オーナーがログインリンクを受け取れることと、実際に招待した閲覧者がリンクから入れることを確認します。アカウントの有効化や送信者の確認が未完了の間は、メール接続が完了したとは扱いません。
+
 ## 最初の利用
 
 1. オーナー宛ての招待メールを開き、公開 URL に戻ります。
